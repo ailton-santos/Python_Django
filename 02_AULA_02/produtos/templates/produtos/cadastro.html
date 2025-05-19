@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Produto</title>
+    <link rel="stylesheet" href="{% static 'produtos/style.css' %}">
+</head>
+<body>
+     <div class="container">
+        <h1>Cadastro de Produto</h1>
+
+        {% if mensagem %}
+            <div class="mensagem-ok">
+        <img src="{% static 'produtos/ok.jpg' %}" alt="Cadastro OK" width="50" height="50">
+        <p><strong>{{ mensagem }}</strong></p>
+    </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar</button>
+        
+    </form>
+    </div>
+</body>
+</html>
