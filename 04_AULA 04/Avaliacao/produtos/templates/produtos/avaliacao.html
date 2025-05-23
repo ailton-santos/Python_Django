@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avaliação</title>
+    <link rel="stylesheet" href="{% static 'produtos/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Avalie o Produto</h1>
+
+    {% if dados %}
+        <h3>Obrigado pela avaliação, {{ dados.nome }}!</h3>
+        <p>Nota: {{ dados.nota }} estrela(s)</p>
+        <p>Comentário: {{ dados.comentario|default:"(Nenhum comentário)" }}</p>
+        <p>ID do Produto: {{ dados.produto_id }}</p>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enviar Avaliação</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>
