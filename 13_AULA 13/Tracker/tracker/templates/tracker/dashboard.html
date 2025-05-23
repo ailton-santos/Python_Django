@@ -1,0 +1,8 @@
+<h2>Bem-vindo, {{ user.username }}</h2>
+<p>Total de calorias (7 dias): {{ total }}</p>
+<ul>
+  {% for entry in entries %}
+    <li>{{ entry.date }} - {{ entry.calories }} cal</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'add_entry' %}">Adicionar Entrada</a>
