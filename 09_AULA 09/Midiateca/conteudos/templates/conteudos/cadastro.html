@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Conteúdo</title>
+    <link rel="stylesheet" href="{% static 'conteudos/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Conteúdo</h1>
+
+    {% if dados %}
+        <div class="mensagem-ok">
+            <p><strong>{{ dados.titulo }}</strong> publicado com sucesso!</p>
+            <p>{{ dados.descricao }}</p>
+            <p>📅 {{ dados.data }}</p>
+
+            <h3>🎬 Vídeo 1:</h3>
+            <iframe width="100%" height="315" src="{{ dados.youtube1_embed }}" frameborder="0" allowfullscreen></iframe>
+
+            {% if dados.youtube2_embed %}
+                <h3>🎬 Vídeo 2:</h3>
+                <iframe width="100%" height="315" src="{{ dados.youtube2_embed }}" frameborder="0" allowfullscreen></iframe>
+            {% endif %}
+
+            {% if dados.spotify_embed %}
+                <h3>🎧 Spotify:</h3>
+                <iframe style="border-radius:12px" src="{{ dados.spotify_embed }}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            {% endif %}
+        </div>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar Conteúdo</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>
