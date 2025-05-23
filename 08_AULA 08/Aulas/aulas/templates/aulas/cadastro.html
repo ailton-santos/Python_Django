@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Aula</title>
+    <link rel="stylesheet" href="{% static 'aulas/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Aula</h1>
+
+    {% if dados %}
+        <div class="mensagem-ok">
+            <p><strong>Aula '{{ dados.titulo }}' cadastrada com sucesso!</strong></p>
+            <ul>
+                <li>Data: {{ dados.data }}</li>
+                <li>Professor: {{ dados.professor }}</li>
+                <li>Nível: {{ dados.nivel }}</li>
+                <li>Descrição: {{ dados.descricao }}</li>
+            </ul>
+            <p>🎧 Áudio:</p>
+            <audio controls>
+                <source src="{{ dados.audio.url }}" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar Aula</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>
