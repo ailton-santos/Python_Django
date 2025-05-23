@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>SCADA - Nível do Tanque</title>
+    <style>
+        .tanque {
+            width: 100px;
+            height: 300px;
+            border: 2px solid #000;
+            background-color: #ccc;
+            position: relative;
+        }
+        .nivel {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #00f;
+        }
+    </style>
+</head>
+<body>
+    <h2>Simulação de Tanque</h2>
+    <div class="tanque">
+        <div id="nivel" class="nivel" style="height: {{ nivel }}%;"></div>
+    </div>
+    <br>
+    <button onclick="ligar()">Ligar</button>
+    <button onclick="desligar()">Desligar</button>
+
+    <script>
+        function atualizarNivel() {
+            fetch('/nivel/')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('nivel').style.height = data.nivel + '%';
+                });
+        }
+
+        function ligar() {
+            fetch('/ligar/').then(() => atualizarNivel());
+        }
+
+        function desligar() {
+            fetch('/desligar/').then(() => atualizarNivel());
+        }
+
+        setInterval(atualizarNivel, 500);
+    </script>
+</body>
+</html>
