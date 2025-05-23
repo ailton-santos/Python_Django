@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Filme</title>
+    <link rel="stylesheet" href="{% static 'filmes/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Filme</h1>
+
+    {% if dados %}
+        <div class="mensagem-ok">
+            <p><strong>Filme {{ dados.nome }} cadastrado com sucesso!</strong></p>
+            <ul>
+                <li>Lançamento: {{ dados.data_lancamento }}</li>
+                <li>Categoria: {{ dados.categoria }}</li>
+                <li>Nota: {{ dados.nota }}/10</li>
+                <li>Trailer: <a href="{{ dados.trailer }}" target="_blank">Ver trailer</a></li>
+                <li>Sinopse: {{ dados.sinopse }}</li>
+            </ul>
+            {% if dados.capa %}
+                <img src="{{ dados.capa.url }}" alt="Capa" width="200">
+            {% endif %}
+        </div>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar Filme</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>
