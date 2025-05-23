@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de CEP</title>
+    <link rel="stylesheet" href="{% static 'cep/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Consultar Endereço por CEP</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if erro %}
+        <p class="erro">{{ erro }}</p>
+    {% endif %}
+
+    {% if dados %}
+        <div class="resultado">
+            <h2>Resultado:</h2>
+            <ul>
+                <li><strong>Logradouro:</strong> {{ dados.logradouro }}</li>
+                <li><strong>Bairro:</strong> {{ dados.bairro }}</li>
+                <li><strong>Cidade:</strong> {{ dados.localidade }}</li>
+                <li><strong>Estado:</strong> {{ dados.uf }}</li>
+            </ul>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
