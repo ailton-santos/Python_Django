@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Curso</title>
+    <link rel="stylesheet" href="{% static 'cursos/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Curso</h1>
+
+    {% if dados %}
+        <div class="mensagem-ok">
+            <p><strong>Curso {{ dados.nome }} cadastrado com sucesso!</strong></p>
+            <ul>
+                <li>Data de Início: {{ dados.data_inicio }}</li>
+                <li>Carga Horária: {{ dados.carga_horaria }} horas</li>
+                <li>Áreas: {{ dados.areas|join:", " }}</li>
+                <li>Descrição: {{ dados.descricao }}</li>
+            </ul>
+        </div>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar Curso</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>
