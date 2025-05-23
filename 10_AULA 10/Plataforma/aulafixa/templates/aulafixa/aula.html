@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="{% static 'aulafixa/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>{{ titulo }}</h1>
+    <p>{{ descricao }}</p>
+
+    <h2>🎬 Vídeo</h2>
+    <iframe width="100%" height="315" src="{{ youtube_embed }}" frameborder="0" allowfullscreen></iframe>
+
+    <h2>🎧 Trilha Sonora</h2>
+    <iframe style="border-radius:12px" src="{{ spotify_embed }}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+</div>
+</body>
+</html>
