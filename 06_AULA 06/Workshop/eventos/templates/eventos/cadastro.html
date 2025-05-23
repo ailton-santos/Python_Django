@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Evento</title>
+    <link rel="stylesheet" href="{% static 'eventos/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Evento</h1>
+
+    {% if dados %}
+        <div class="mensagem-ok">
+            <p><strong>Evento {{ dados.nome }} cadastrado com sucesso!</strong></p>
+            <ul>
+                <li>Data: {{ dados.data }}</li>
+                <li>Horário: {{ dados.horario }}</li>
+                <li>Categoria: {{ dados.categoria }}</li>
+                <li>Gratuito: {{ dados.gratuito }}</li>
+                <li>Descrição: {{ dados.descricao }}</li>
+            </ul>
+        </div>
+    {% else %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar Evento</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>
