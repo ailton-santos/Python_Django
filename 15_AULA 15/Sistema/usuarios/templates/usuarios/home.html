@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel Inicial</title>
+  <link rel="stylesheet" href="/static/css/home.css">
+</head>
+<body>
+  <h1 class="animado">Bem-vindo ao Sistema Integrado</h1>
+  <nav>
+    <a href="/scada/">Tanque SCADA</a> |
+    <a href="/calorias/">Calorias</a> |
+    <a href="/cep/">Consulta CEP</a>
+  </nav>
+  <script>
+    document.querySelector(".animado").animate([
+      { transform: "scale(1)" },
+      { transform: "scale(1.1)" },
+      { transform: "scale(1)" }
+    ], {
+      duration: 2000,
+      iterations: Infinity
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+/* Estilo base */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cabeçalhos */
+h1, h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* Container centralizado */
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 25px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Formulários */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, select, textarea, button {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,10 @@
+<h2>Consulta de CEP</h2>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button>Buscar</button></form>
+{% if endereco %}
+<ul>
+  <li><strong>Rua:</strong> {{ endereco.logradouro }}</li>
+  <li><strong>Bairro:</strong> {{ endereco.bairro }}</li>
+  <li><strong>Cidade:</strong> {{ endereco.localidade }}</li>
+</ul>
+{% endif %}
+{% if erro %}<p>{{ erro }}</p>{% endif %}

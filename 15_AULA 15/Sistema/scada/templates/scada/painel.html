@@ -1,0 +1,18 @@
+<div style="text-align:center">
+<h2>Nível do Tanque</h2>
+<div id="barratanque" style="height:300px;width:100px;background:#ccc;position:relative;border:1px solid black;">
+  <div id="nivel" style="background:#00f;width:100%;position:absolute;bottom:0;height:0%;"></div>
+</div>
+<br>
+<button onclick="ligar()">Ligar</button>
+<button onclick="desligar()">Desligar</button>
+<script>
+function ligar() { fetch('/scada/ligar/') }
+function desligar() { fetch('/scada/desligar/') }
+setInterval(() => {
+  fetch('/scada/nivel/').then(res => res.json()).then(data => {
+    document.getElementById('nivel').style.height = data.nivel + '%';
+  });
+}, 500);
+</script>
+</div>

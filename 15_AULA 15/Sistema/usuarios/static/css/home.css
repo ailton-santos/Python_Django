@@ -1,0 +1,13 @@
+body {
+    background: linear-gradient(#222, #444);
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    padding-top: 50px;
+}
+a {
+    color: cyan;
+    font-size: 20px;
+    text-decoration: none;
+    margin: 0 10px;
+}

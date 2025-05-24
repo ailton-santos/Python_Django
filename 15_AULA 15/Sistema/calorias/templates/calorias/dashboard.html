@@ -1,0 +1,8 @@
+<h2>Minhas Calorias</h2>
+<p>Total últimos dias: {{ total }} kcal</p>
+<ul>
+  {% for e in entries %}
+    <li>{{ e.date }}: {{ e.calories }} kcal</li>
+  {% endfor %}
+</ul>
+<a href="/calorias/add/">Adicionar</a>
