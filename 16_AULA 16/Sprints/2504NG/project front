@@ -1,0 +1,62 @@
+Criei uma pagina que simula a entrada de uma caixa de e-mail.
+Onde após digitar o e-mail e senha, volta outra pagina Informando... "Login aceito com sucesso", "Bem vindo"
+
+#views do projeto
+from django.shortcuts import render
+from .forms import LoginForm
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            senha = form.cleaned_data['senha']
+            # Aqui você pode autenticar o usuário se quiser
+            return render(request, 'produtos/login.html', {'email': email})
+    else:
+        form = LoginForm()
+    return render(request, 'produtos/login.html', {'form': form})
+
+
+#forms do projeto
+
+from django import forms
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'placeholder': 'Digite seu e-mail'}))
+    senha = forms.CharField(label='Senha', widget=forms.PasswordInput(attrs={'placeholder': 'Digite sua senha'}))
+
+class RetornoForm(forms.Form):
+    mensagem = forms.CharField(
+        label='',
+        initial='E-mail válido',
+        widget=forms.HiddenInput()
+    )
+    bem_vindo = forms.CharField(
+        label='',
+        initial='Seja bem-vindo',
+        widget=forms.HiddenInput()
+    )
+#login.htlm
+
+
+{% load static %}
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login Aceito Com Sucesso</h2>
+           
+        <form method="post">
+
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Bem vindo</button>
+        </form>
+    </div>
+</body>
+</html>
