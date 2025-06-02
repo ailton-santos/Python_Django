@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de alunos e notas</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <form method="post">
+        <h1>Cadastro de alunos e notas</h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+
+    <h2>Mural dos resultados</h2>
+    <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Nota 1</th>
+            <th>Nota 2</th>
+            <th>Nota 3</th>
+            <th>Nota 4</th>
+            <th>Média</th>
+            <th>Status</th>
+        </tr>
+        {% for aluno in alunos %}
+        <tr>
+            <td>{{ aluno.nome }}</td>
+            <td>{{ aluno.nota1 }}</td>
+            <td>{{ aluno.nota2 }}</td>
+            <td>{{ aluno.nota3 }}</td>
+            <td>{{ aluno.nota4 }}</td>
+            <td>{{ aluno.media }}</td>
+            <td>{{ aluno.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
