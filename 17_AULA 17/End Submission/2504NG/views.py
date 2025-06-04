@@ -1,38 +1,22 @@
-# Create your views here.
-from django.shortcuts import render, redirect
-from .forms import AlunoForm
+from django.shortcuts import render
+from.forms import InstrumentoForm
 
-# Lista global
-alunos_lista = []
-
-def cadastro(request):
-    global alunos_lista
-    if request.method == 'POST':
-        form = AlunoForm(request.POST)
+def enviar_info(request):
+    mensagem = ""
+    if request.method == "POST":
+        form = InstrumentoForm(request.POST)
         if form.is_valid():
-            nome = form.cleaned_data['nome']
-            nota1 = form.cleaned_data['nota1']
-            nota2 = form.cleaned_data['nota2']
-            nota3 = form.cleaned_data['nota3']
-            nota4 = form.cleaned_data['nota4']
-            media = (nota1 + nota2 + nota3 + nota4) / 4
-            if media >= 6:
-                status = "Aprovado" 
-            else:
-                status = "Reprovado"
+            nome = form.cleaned_data["nome"]
+            descricao = form.cleaned_data["descricao"]
+            numero_de_serie = form.cleaned_data["numero_de_serie"]
+            area_de_utilizacao = form.cleaned_data["area_de_utilizacao"]
             
-            aluno = {
-                'nome': nome,
-                'nota1': nota1,
-                'nota2': nota2,
-                'nota3': nota3,
-                'nota4': nota4,
-                'media': round(media, 2),
-                'status': status
-            }
-            alunos_lista.append(aluno)
-            return redirect('cadastro')
+            return render (request, 'instrumento/sucesso.html')
+            #mensagem = f"Cadastro realizado com sucesso: {nome}, {descricao}, {numero_de_serie} e {area_de_utilizacao}"
+        
     else:
-        form = AlunoForm()
+        form = InstrumentoForm()
+    
+    return render(request, 'instrumento/instrumento.html', {'form':form, 'mensagem': mensagem})
 
-    return render(request, 'alunos/cadastro.html', {'form': form, 'alunos': alunos_lista})
+# Create your views here.
