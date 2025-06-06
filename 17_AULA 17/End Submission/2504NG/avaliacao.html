@@ -1,0 +1,145 @@
+{% comment %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Avaliação de Produto</title>
+  <link rel="stylesheet" href="{% static 'formulario/css/seu_estilo.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h1>Lanchonete Vô Vicente</h1>
+    <h3>Avaliação do Produto</h3>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Enviar Avaliação</button>
+    </form>
+  </div>
+</body>
+</html>  {% endcomment %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Avaliação de Produto</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e6f2e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(168, 213, 186, 0.3);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1, h3 {
+      text-align: center;
+      color: #2e5d34;
+      margin: 10px 0;
+    }
+
+    .mensagem-ok {
+      background-color: #d9edd9;
+      border: 1px solid #8CCBA5;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .mensagem-ok img {
+      margin-bottom: 10px;
+    }
+
+    .mensagem-ok p {
+      margin: 0;
+      font-weight: bold;
+      color: #4B7F52;
+    }
+
+    form p {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #7DA68D;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #8CCBA5;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #8CCBA5;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(140, 203, 165, 0.3);
+    }
+
+    button {
+      background-color: #2e5d34;
+      color: white;
+      border: none;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 8px;
+      width: 100%;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #8CCBA5;
+      color: #4B7F52;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <h1>Lanchonete Vô Vicente</h1>
+    <h3>Avaliação de Produto</h3>
+
+    {% if mensagem %}
+      <div class="mensagem-ok">
+        <img src="{% static 'formulario/imagens/avaliar.jpg' %}" alt="Avaliação efetuada com sucesso!" width="50" height="50" />
+        <p><strong>{{ mensagem }}</strong></p>
+      </div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Avaliar</button>
+    </form>
+  </div>
+</body>
+</html>
