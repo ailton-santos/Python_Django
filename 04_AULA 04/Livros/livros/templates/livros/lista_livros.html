@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Busca de Livros</title>
+    <link rel="stylesheet" href="{% static 'livros/estilo.css' %}">
+</head>
+<body>
+    <h1>Buscar Livros</h1>
+
+    <form method="get">
+        <input type="text" name="termo" placeholder="Digite título ou autor" value="{{ termo }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <ul>
+        {% for livro in livros %}
+            <li>
+                <strong>{{ livro.titulo }}</strong> — {{ livro.autor }} ({{ livro.ano }})
+            </li>
+        {% empty %}
+            <li>Nenhum livro encontrado.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
