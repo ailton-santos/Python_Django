@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Blog</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        .post-list-item { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .post-list-item:last-child { border-bottom: none; }
+        .post-list-item h2 { margin: 0; }
+        .post-list-item p { color: #666; font-size: 0.9em; }
+        .post-list-item a { text-decoration: none; color: #007bff; }
+        .post-list-item a:hover { text-decoration: underline; }
+        .add-post-link { display: block; text-align: center; margin-top: 20px; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+        .add-post-link:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Posts do Blog</h1>
+        {% for post in posts %}
+            <div class="post-list-item">
+                <h2><a href="{% url 'detalhe_post' pk=post.pk %}">{{ post.titulo }}</a></h2>
+                <p>Publicado em: {{ post.data_publicacao|date:"d/m/Y H:i" }}</p>
+            </div>
+        {% empty %}
+            <p>Nenhum post disponível ainda.</p>
+        {% endfor %}
+        <a href="{% url 'criar_post' %}" class="add-post-link">Criar Novo Post</a>
+    </div>
+</body>
+</html>
