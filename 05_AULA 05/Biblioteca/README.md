@@ -1,7 +1,7 @@
 ## BIBLIOTECA DIGITAL
 ### Prof. Ailton
 <div align="center">
-  <img src="https://github.com/ailton-santos/Python_Django/blob/main/05_AULA%2005/Biblioteca/Bibio.png" alt="Descrição da imagem" width="300" height="200">
+  <img src="https://github.com/ailton-santos/Python_Django/blob/main/05_AULA%2005/Biblioteca/Bibio.png" alt="Biblioteca" width="300" height="200">
 </div>
 
 #### O que foi visto?
