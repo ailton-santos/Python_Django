@@ -1,0 +1,38 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Lista de Usuários - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<h1>👥 Lista de Usuários</h1>
+
+<a href="{% url 'criar_usuario' %}" class="btn btn-success">➕ Novo Usuário</a>
+
+{% if usuarios %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Data de Cadastro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td><strong>{{ usuario.nome }}</strong></td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.telefone }}</td>
+                <td>{{ usuario.data_cadastro|date:"d/m/Y" }}</td>
+                <td>
+                    <a href="{% url 'detalhe_usuario' pk=usuario.pk %}" class="btn" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">👁️ Ver</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Nenhum usuário cadastrado ainda.</p>
+{% endif %}
+{% endblock %}

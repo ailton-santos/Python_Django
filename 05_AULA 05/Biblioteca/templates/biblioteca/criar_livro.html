@@ -1,0 +1,45 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Cadastrar Livro - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<h1>➕ Cadastrar Novo Livro</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div style="margin-bottom: 15px;">
+        <label for="{{ form.titulo.id_for_label }}">Título:</label>
+        {{ form.titulo }}
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="{{ form.autor.id_for_label }}">Autor:</label>
+        {{ form.autor }}
+        <small style="color: #666;">Se o autor não existir, <a href="/admin/" target="_blank">cadastre-o primeiro no admin</a></small>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="{{ form.categoria.id_for_label }}">Categoria:</label>
+        {{ form.categoria }}
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="{{ form.isbn.id_for_label }}">ISBN:</label>
+        {{ form.isbn }}
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="{{ form.ano_publicacao.id_for_label }}">Ano de Publicação:</label>
+        {{ form.ano_publicacao }}
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="{{ form.status.id_for_label }}">Status:</label>
+        {{ form.status }}
+    </div>
+    
+    <button type="submit" class="btn btn-success">💾 Salvar Livro</button>
+    <a href="{% url 'lista_livros' %}" class="btn">❌ Cancelar</a>
+</form>
+{% endblock %}

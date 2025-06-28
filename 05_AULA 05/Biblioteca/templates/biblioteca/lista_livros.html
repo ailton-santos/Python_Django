@@ -1,0 +1,69 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Lista de Livros - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<h1>📚 Lista de Livros</h1>
+
+<!-- Formulário de busca -->
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+    <form method="get" style="display: flex; gap: 15px; align-items: end;">
+        <div style="flex: 1;">
+            <label for="busca">Buscar:</label>
+            <input type="text" name="busca" id="busca" placeholder="Título, autor ou ISBN..." value="{{ busca }}" class="form-control">
+        </div>
+        <div style="flex: 1;">
+            <label for="status">Status:</label>
+            <select name="status" id="status" class="form-control">
+                <option value="">Todos</option>
+                <option value="disponivel" {% if status_filtro == 'disponivel' %}selected{% endif %}>Disponível</option>
+                <option value="emprestado" {% if status_filtro == 'emprestado' %}selected{% endif %}>Emprestado</option>
+                <option value="reservado" {% if status_filtro == 'reservado' %}selected{% endif %}>Reservado</option>
+                <option value="manutencao" {% if status_filtro == 'manutencao' %}selected{% endif %}>Em Manutenção</option>
+            </select>
+        </div>
+        <button type="submit" class="btn">🔍 Buscar</button>
+    </form>
+</div>
+
+<a href="{% url 'criar_livro' %}" class="btn btn-success">➕ Novo Livro</a>
+
+{% if livros %}
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Categoria</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for livro in livros %}
+            <tr>
+                <td><strong>{{ livro.titulo }}</strong></td>
+                <td>{{ livro.autor.nome }}</td>
+                <td>{{ livro.categoria.nome|default:"Sem categoria" }}</td>
+                <td>
+                    {% if livro.status == 'disponivel' %}
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">✅ Disponível</span>
+                    {% elif livro.status == 'emprestado' %}
+                        <span style="background: #dc3545; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">📤 Emprestado</span>
+                    {% elif livro.status == 'reservado' %}
+                        <span style="background: #ffc107; color: #212529; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">📅 Reservado</span>
+                    {% else %}
+                        <span style="background: #6c757d; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">🔧 Manutenção</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'detalhe_livro' pk=livro.pk %}" class="btn" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">👁️ Ver</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Nenhum livro encontrado com os critérios de busca.</p>
+{% endif %}
+{% endblock %}

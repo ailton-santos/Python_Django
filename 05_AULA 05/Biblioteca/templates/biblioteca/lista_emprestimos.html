@@ -1,0 +1,48 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Empréstimos Ativos - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>📋 Empréstimos Ativos</h1>
+    
+    <a href="{% url 'criar_emprestimo' %}" class="btn btn-success">➕ Novo Empréstimo</a>
+    
+    {% if emprestimos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Livro</th>
+                    <th>Usuário</th>
+                    <th>Data do Empréstimo</th>
+                    <th>Previsão de Devolução</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emprestimo in emprestimos %}
+                <tr {% if emprestimo.esta_em_atraso %}style="background-color: #ffebee;"{% endif %}>
+                    <td><strong>{{ emprestimo.livro.titulo }}</strong></td>
+                    <td>{{ emprestimo.usuario.nome }}</td>
+                    <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao|date:"d/m/Y" }}</td>
+                    <td>
+                        {% if emprestimo.esta_em_atraso %}
+                            <span class="badge badge-danger">⚠️ Atraso de {{ emprestimo.dias_atraso }} dia{{ emprestimo.dias_atraso|pluralize }}</span>
+                        {% else %}
+                            <span class="badge badge-warning">📤 No prazo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'devolver_livro' pk=emprestimo.pk %}" class="btn" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">📥 Devolver</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum empréstimo ativo no momento.</p>
+    {% endif %}
+</div>
+{% endblock %}

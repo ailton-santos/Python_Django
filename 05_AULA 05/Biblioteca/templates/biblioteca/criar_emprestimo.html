@@ -1,0 +1,38 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Novo Empréstimo - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>📋 Realizar Novo Empréstimo</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.livro.id_for_label }}">Livro:</label>
+            {{ form.livro }}
+            <small>Apenas livros disponíveis são mostrados</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.usuario.id_for_label }}">Usuário:</label>
+            {{ form.usuario }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.data_prevista_devolucao.id_for_label }}">Data Prevista para Devolução:</label>
+            {{ form.data_prevista_devolucao }}
+            <small>Padrão: 14 dias a partir de hoje</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.observacoes.id_for_label }}">Observações (opcional):</label>
+            {{ form.observacoes }}
+        </div>
+        
+        <button type="submit" class="btn btn-success">📤 Realizar Empréstimo</button>
+        <a href="{% url 'lista_emprestimos' %}" class="btn">❌ Cancelar</a>
+    </form>
+</div>
+{% endblock %}

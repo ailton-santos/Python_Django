@@ -1,0 +1,50 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Início - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<h1>🏠 Biblioteca Digital</h1>
+<p>Bem-vindo ao sistema de gerenciamento da nossa biblioteca!</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+    <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; text-align: center;">
+        <h3 style="font-size: 2rem; color: #1976d2; margin-bottom: 10px;">{{ total_livros }}</h3>
+        <p style="color: #666; margin: 0;">Total de Livros</p>
+    </div>
+    <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; text-align: center;">
+        <h3 style="font-size: 2rem; color: #388e3c; margin-bottom: 10px;">{{ livros_disponiveis }}</h3>
+        <p style="color: #666; margin: 0;">Livros Disponíveis</p>
+    </div>
+    <div style="background: #fff3e0; padding: 20px; border-radius: 8px; text-align: center;">
+        <h3 style="font-size: 2rem; color: #f57c00; margin-bottom: 10px;">{{ total_usuarios }}</h3>
+        <p style="color: #666; margin: 0;">Usuários Ativos</p>
+    </div>
+    <div style="background: #fce4ec; padding: 20px; border-radius: 8px; text-align: center;">
+        <h3 style="font-size: 2rem; color: #c2185b; margin-bottom: 10px;">{{ emprestimos_ativos }}</h3>
+        <p style="color: #666; margin: 0;">Empréstimos Ativos</p>
+    </div>
+    {% if emprestimos_atraso > 0 %}
+    <div style="background: #ffebee; padding: 20px; border-radius: 8px; text-align: center; border-left: 4px solid #f44336;">
+        <h3 style="font-size: 2rem; color: #d32f2f; margin-bottom: 10px;">{{ emprestimos_atraso }}</h3>
+        <p style="color: #666; margin: 0;">⚠️ Em Atraso</p>
+    </div>
+    {% endif %}
+</div>
+
+<div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 30px;">
+    <h2 style="color: #333; margin-bottom: 20px;">🚀 Ações Rápidas</h2>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="{% url 'criar_livro' %}" class="btn">📖 Cadastrar Livro</a>
+        <a href="{% url 'criar_usuario' %}" class="btn">👤 Cadastrar Usuário</a>
+        <a href="{% url 'criar_emprestimo' %}" class="btn btn-success">📋 Novo Empréstimo</a>
+        <a href="{% url 'lista_emprestimos' %}" class="btn" style="background: #17a2b8;">📋 Ver Empréstimos</a>
+    </div>
+</div>
+
+{% if emprestimos_atraso > 0 %}
+<div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin-top: 20px;">
+    <h4 style="color: #856404; margin-bottom: 10px;">⚠️ Atenção!</h4>
+    <p style="color: #856404; margin: 0;">Existem {{ emprestimos_atraso }} empréstimo{{ emprestimos_atraso|pluralize }} em atraso. <a href="{% url 'lista_emprestimos' %}" style="color: #856404; text-decoration: underline;">Verificar agora</a></p>
+</div>
+{% endif %}
+{% endblock %}

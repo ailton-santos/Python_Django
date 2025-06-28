@@ -1,0 +1,82 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}{{ livro.titulo }} - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<h1>📖 {{ livro.titulo }}</h1>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0; background: #f8f9fa; padding: 20px; border-radius: 8px;">
+    <div>
+        <h3>📋 Informações do Livro</h3>
+        <p><strong>Autor:</strong> {{ livro.autor.nome }}</p>
+        <p><strong>Categoria:</strong> {{ livro.categoria.nome|default:"Não informada" }}</p>
+        <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
+        <p><strong>Ano de Publicação:</strong> {{ livro.ano_publicacao }}</p>
+        <p><strong>Data de Cadastro:</strong> {{ livro.data_cadastro|date:"d/m/Y H:i" }}</p>
+    </div>
+    <div>
+        <h3>📊 Status Atual</h3>
+        <p>
+            {% if livro.status == 'disponivel' %}
+                <span style="background: #28a745; color: white; padding: 8px 16px; border-radius: 20px; font-size: 1rem;">✅ Disponível para Empréstimo</span>
+            {% elif livro.status == 'emprestado' %}
+                <span style="background: #dc3545; color: white; padding: 8px 16px; border-radius: 20px; font-size: 1rem;">📤 Emprestado</span>
+            {% elif livro.status == 'reservado' %}
+                <span style="background: #ffc107; color: #212529; padding: 8px 16px; border-radius: 20px; font-size: 1rem;">📅 Reservado</span>
+            {% else %}
+                <span style="background: #6c757d; color: white; padding: 8px 16px; border-radius: 20px; font-size: 1rem;">🔧 Em Manutenção</span>
+            {% endif %}
+        </p>
+        
+        {% if livro.pode_ser_emprestado %}
+            <a href="{% url 'criar_emprestimo' %}?livro={{ livro.pk }}" class="btn btn-success">📋 Emprestar Este Livro</a>
+        {% endif %}
+    </div>
+</div>
+
+<h3>📜 Histórico de Empréstimos</h3>
+{% if emprestimos %}
+    <table>
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Data do Empréstimo</th>
+                <th>Previsão de Devolução</th>
+                <th>Data de Devolução</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emprestimo in emprestimos %}
+            <tr>
+                <td>{{ emprestimo.usuario.nome }}</td>
+                <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                <td>{{ emprestimo.data_prevista_devolucao|date:"d/m/Y" }}</td>
+                <td>
+                    {% if emprestimo.data_devolucao %}
+                        {{ emprestimo.data_devolucao|date:"d/m/Y" }}
+                    {% else %}
+                        <em>Não devolvido</em>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not emprestimo.data_devolucao %}
+                        {% if emprestimo.esta_em_atraso %}
+                            <span style="background: #dc3545; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">⚠️ Em atraso</span>
+                        {% else %}
+                            <span style="background: #ffc107; color: #212529; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">📤 Ativo</span>
+                        {% endif %}
+                    {% else %}
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">✅ Devolvido</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Este livro ainda não foi emprestado.</p>
+{% endif %}
+
+<a href="{% url 'lista_livros' %}" class="btn">← Voltar para Lista de Livros</a>
+{% endblock %}

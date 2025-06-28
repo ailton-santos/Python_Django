@@ -1,0 +1,37 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Devolver Livro - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>📥 Confirmar Devolução</h1>
+    
+    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+        <h3>📖 {{ emprestimo.livro.titulo }}</h3>
+        <p><strong>Usuário:</strong> {{ emprestimo.usuario.nome }}</p>
+        <p><strong>Data do Empréstimo:</strong> {{ emprestimo.data_emprestimo|date:"d/m/Y H:i" }}</p>
+        <p><strong>Previsão de Devolução:</strong> {{ emprestimo.data_prevista_devolucao|date:"d/m/Y" }}</p>
+        
+        {% if emprestimo.esta_em_atraso %}
+            <div class="alert alert-error">
+                ⚠️ <strong>Atenção:</strong> Este empréstimo está em atraso há {{ emprestimo.dias_atraso }} dia{{ emprestimo.dias_atraso|pluralize }}.
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                ✅ Devolução dentro do prazo.
+            </div>
+        {% endif %}
+        
+        {% if emprestimo.observacoes %}
+            <p><strong>Observações:</strong> {{ emprestimo.observacoes }}</p>
+        {% endif %}
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        <p>Tem certeza de que deseja confirmar a devolução deste livro?</p>
+        <button type="submit" class="btn btn-success">✅ Confirmar Devolução</button>
+        <a href="{% url 'lista_emprestimos' %}" class="btn">❌ Cancelar</a>
+    </form>
+</div>
+{% endblock %}

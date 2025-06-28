@@ -1,0 +1,31 @@
+{% extends 'biblioteca/base.html' %}
+
+{% block title %}Cadastrar Usuário - Biblioteca Digital{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>👤 Cadastrar Novo Usuário</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.nome.id_for_label }}">Nome Completo:</label>
+            {{ form.nome }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email:</label>
+            {{ form.email }}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.telefone.id_for_label }}">Telefone:</label>
+            {{ form.telefone }}
+        </div>
+        
+        <button type="submit" class="btn btn-success">💾 Salvar Usuário</button>
+        <a href="{% url 'lista_usuarios' %}" class="btn">❌ Cancelar</a>
+    </form>
+</div>
+{% endblock %}
