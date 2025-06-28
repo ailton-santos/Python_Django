@@ -1,5 +1,8 @@
 ## BIBLIOTECA DIGITAL
 ### Prof. Ailton
+
+#### O que foi visto?
+
 - Choices em campos: Para status dos livros (Disponível, Emprestado, etc.)
 - Métodos personalizados nos models: Lógica de negócio dentro dos modelos
 - Properties calculadas: @property para campos derivados
