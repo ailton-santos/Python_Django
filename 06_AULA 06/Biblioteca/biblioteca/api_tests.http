@@ -1,0 +1,48 @@
+### Listar todos os autores
+GET http://127.0.0.1:8000/api/autores/
+
+### Criar um novo autor
+POST http://127.0.0.1:8000/api/autores/
+Content-Type: application/json
+
+{
+    "nome": "Machado de Assis",
+    "nacionalidade": "Brasileiro",
+    "data_nascimento": "1839-06-21",
+    "biografia": "Joaquim Maria Machado de Assis foi um escritor brasileiro."
+}
+
+### Listar livros de um autor específico (substitua 1 pelo ID do autor)
+GET http://127.0.0.1:8000/api/autores/1/livros/
+
+### Listar todos os livros
+GET http://127.0.0.1:8000/api/livros/
+
+### Listar apenas livros disponíveis
+GET http://127.0.0.1:8000/api/livros/disponiveis/
+
+### Emprestar um livro (substitua 1 pelo ID do livro)
+POST http://127.0.0.1:8000/api/livros/1/emprestar/
+
+### Criar uma nova categoria
+POST http://127.0.0.1:8000/api/categorias/
+Content-Type: application/json
+
+{
+    "nome": "Romance",
+    "descricao": "Obras de ficção narrativa"
+}
+
+### Criar um novo livro
+POST http://127.0.0.1:8000/api/livros/
+Content-Type: application/json
+
+{
+    "titulo": "Dom Casmurro",
+    "autor": 1,
+    "categoria": 1,
+    "isbn": "9788525406958",
+    "ano_publicacao": 1899,
+    "paginas": 256,
+    "disponivel": true
+}

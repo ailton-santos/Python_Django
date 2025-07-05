@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Biblioteca</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background-color: #f5f5f5;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .card { 
+            border: 1px solid #ddd; 
+            padding: 20px; 
+            margin: 15px 0; 
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .api-links { 
+            background: #e3f2fd; 
+            padding: 15px; 
+            border-radius: 8px; 
+        }
+        .api-links a { 
+            display: block; 
+            margin: 8px 0; 
+            color: #1976d2;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .api-links a:hover {
+            background: #bbdefb;
+        }
+        .stat {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        h1 { color: #333; }
+        h2 { color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Sistema de Biblioteca</h1>
+        
+        <div class="card">
+            <h2>📊 Estatísticas</h2>
+            <div class="stat">Total de Livros: {{ total_livros }}</div>
+            <div class="stat">Total de Autores: {{ total_autores }}</div>
+            <div class="stat">Livros Disponíveis: {{ livros_disponiveis }}</div>
+        </div>
+        
+        <div class="card">
+            <h2>📖 Livros Recentes</h2>
+            {% for livro in livros_recentes %}
+                <p><strong>{{ livro.titulo }}</strong> - {{ livro.autor.nome }} ({{ livro.ano_publicacao }})</p>
+            {% empty %}
+                <p>Nenhum livro cadastrado ainda.</p>
+            {% endfor %}
+        </div>
+        
+        <div class="card api-links">
+            <h2>🔗 API REST - Endpoints Disponíveis</h2>
+            <a href="/api/" target="_blank">🏠 API Root</a>
+            <a href="/api/autores/" target="_blank">👨‍💼 Autores</a>
+            <a href="/api/categorias/" target="_blank">📂 Categorias</a>
+            <a href="/api/livros/" target="_blank">📚 Livros</a>
+            <a href="/api/livros/disponiveis/" target="_blank">✅ Livros Disponíveis</a>
+            <a href="/admin/" target="_blank">⚙️ Admin Panel</a>
+        </div>
+    </div>
+</body>
+</html>
