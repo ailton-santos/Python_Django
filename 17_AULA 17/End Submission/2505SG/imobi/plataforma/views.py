@@ -1,0 +1,68 @@
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from .models import Imovei, Cidade, Visitas
+from django.shortcuts import get_object_or_404
+
+@login_required(login_url='login')  # Bloqueia o acesso para usuários não autenticados
+def home(request):
+    # Coleta os filtros da URL
+    preco_minimo = request.GET.get('preco_minimo')
+    preco_maximo = request.GET.get('preco_maximo')
+    cidade = request.GET.get('cidade')
+    tipo = request.GET.getlist('tipo')
+    cidades = Cidade.objects.all()
+
+    # Se houver qualquer filtro aplicado
+    if preco_minimo or preco_maximo or cidade or tipo:
+        # Valores padrão se filtros estiverem vazios
+        preco_minimo = float(preco_minimo) if preco_minimo else 0
+        preco_maximo = float(preco_maximo) if preco_maximo else 99999999999
+        tipo = tipo if tipo else ['A', 'C']
+
+        # Filtro aplicado com todos os critérios
+        imoveis = Imovei.objects.filter(
+            valor__gte=preco_minimo,
+            valor__lte=preco_maximo,
+            tipo_imovel__in=tipo,
+            cidade=cidade
+        )
+    else:
+        # Sem filtro: retorna todos
+        imoveis = Imovei.objects.all()
+
+    return render(request, 'home.html', {
+        'imoveis': imoveis,
+        'cidades': cidades
+    })
+
+def imovel(request, id):
+    imovel = get_object_or_404(Imovei, id=id)
+    sugestoes = Imovei.objects.filter(cidade=imovel.cidade).exclude(id=id)[:2] #excluir o imovel que ele ja ta vendo e pega 2
+    return render(request, 'imovel.html', {'imovel': imovel, 'sugestoes': sugestoes, 'id': id})
+
+def agendar_visitas(request):
+    usuario = request.user
+    dia = request.POST.get('dia')
+    horario = request.POST.get('horario')
+    id_imovel = request.POST.get('id_imovel')
+
+    visitas = Visitas(
+        imovel_id = id_imovel,
+        usuario=usuario,
+        dia=dia,
+        horario=horario,
+    )
+    visitas.save()
+
+    return redirect('/agendamentos')
+
+def agendamentos(request):
+    visitas = Visitas.objects.filter(usuario=request.user)
+    return render(request, "agendamentos.html", {'visitas': visitas})
+
+def cancelar_agendamento(request, id):
+    visitas = get_object_or_404(Visitas, id=id)
+    visitas.status = "C"
+    visitas.save()
+    return redirect('/agendamentos')

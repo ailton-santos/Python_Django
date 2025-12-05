@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'plataforma/css/home.css' %}">
+
+    <style>
+        .img-visita {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Meus Agendamentos</h2>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Imóvel</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Dia / Hora</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for visita in visitas %}
+                    <tr>
+                        <td>
+                            <img src="{{ visita.imovel.imagens.all.0.img.url }}" alt="Foto do imóvel" class="img-visita">
+                        </td>
+                        <td>{{ visita.imovel.rua }}, {{ visita.imovel.cidade }}</td>
+                        <td>{{ visita.dia }} / {{ visita.horario }}</td>
+                        <td>
+                            {% if visita.status == "A" %}
+                                <span class="badge bg-success">Agendado</span>
+                            {% elif visita.status == "F" %}
+                                <span class="badge bg-secondary">Finalizado</span>
+                            {% elif visita.status == "C" %}
+                                <span class="badge bg-danger">Cancelado</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if visita.status == "A" %}
+                                <a href="{% url 'cancelar_agendamento' visita.id %}" class="btn btn-danger btn-sm">Cancelar</a>
+                            {% else %}
+                                <a href="" class="btn btn-danger disabled">Cancelar</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4">Você ainda não possui nenhuma visita agendada.</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

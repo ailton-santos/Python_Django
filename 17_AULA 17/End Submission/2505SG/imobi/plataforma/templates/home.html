@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'plataforma/css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+
+    <!-- Botão para abrir modal -->
+<button type="button" class="btn" style="background-color: #30CD9E; color: white;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    FILTRAR
+</button>
+    <div class="row">
+        {% for imovel in imoveis %}
+            <div class="col-md cont">
+                <div class="card_imovel">
+                    <img class="img_capa_imovel" src="{{ imovel.imagens.all.0.img.url }}">
+
+                    <div class="informacoes_imoveis">
+                        <a class="a_none" href="{% url 'imovel' imovel.id %}">
+                            <h4 class="valor">R$ {{ imovel.valor }}</h4>
+                        </a>
+                        <p>{{ imovel.rua }}, {{ imovel.cidade }}</p>
+                        <br>
+                        <img width="7%" src="{% static 'plataforma/img/heart.png' %}">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Cabeçalho do modal -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">FILTRAR</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+
+      <!-- Corpo do modal -->
+      <div class="modal-body">
+        <form action="{% url 'home' %}" method="GET">
+
+          <div class="mb-3">
+            <label for="preco_minimo" class="form-label">Preço mínimo</label>
+            <input id="preco_minimo" name="preco_minimo" class="form-control" type="number" placeholder="R$ 00">
+          </div>
+
+          <div class="mb-3">
+            <label for="preco_maximo" class="form-label">Preço máximo</label>
+            <input id="preco_maximo" name="preco_maximo" class="form-control" type="number" placeholder="R$ 200000000">
+          </div>
+
+          <div class="mb-3">
+            <label for="cidade" class="form-label">Cidade</label>
+            <select id="cidade" name="cidade" class="form-select">
+              {% for cidade in cidades %}
+              <option value="{{ cidade.id }}">{{ cidade.nome }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Tipo</label><br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" name="tipo" type="checkbox" value="A" id="tipo_apto">
+              <label class="form-check-label" for="tipo_apto">Apartamento</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" name="tipo" type="checkbox" value="C" id="tipo_casa">
+              <label class="form-check-label" for="tipo_casa">Casa</label>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <input class="btn btn-success" type="submit" value="FILTRAR">
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

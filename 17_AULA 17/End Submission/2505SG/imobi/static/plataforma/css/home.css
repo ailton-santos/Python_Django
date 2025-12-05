@@ -1,0 +1,185 @@
+/* =============================================
+   VARIÁVEIS GLOBAIS E ESTILOS DE BASE
+   ============================================= */
+
+:root {
+    --cor-principal: #30CD9E;
+    --cor-texto-claro: white;
+}
+
+/* Remove a decoração padrão de links */
+a {
+    color: inherit; /* Herda a cor do elemento pai */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =============================================
+   NAVBAR E LOGO
+   ============================================= */
+
+.bg_navbar {
+    background-color: var(--cor-principal);
+}
+
+.font_logo {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 25px;
+    display: inline;
+}
+
+
+/* =============================================
+   CARROSSEL DE IMAGENS (IMAGEM PRINCIPAL)
+   ============================================= */
+
+#carouselExampleIndicators {
+    max-width: 900px; /* Define uma largura máxima para o carrossel */
+    margin: 20px auto; /* Centraliza o carrossel na página e adiciona um espaço em cima/baixo */
+    border-radius: 15px; /* Adiciona bordas arredondadas ao contêiner do carrossel */
+    overflow: hidden; /* Garante que as imagens não "vazem" das bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adiciona uma sombra sutil */
+}
+
+.carousel-item img {
+    max-height: 500px;  /* Define a altura máxima da imagem. Altere este valor se precisar. */
+    width: %;        /* Faz a largura ocupar todo o espaço do carrossel */
+    object-fit: cover;  /* Essencial: Redimensiona a imagem para preencher o espaço sem distorcer. */
+    display: block;
+}
+
+
+/* =============================================
+   CARDS DE IMÓVEIS
+   ============================================= */
+
+.card_imovel {
+    background-color: var(--cor-principal);
+    width: 20rem;
+    margin-top: 50px;
+    border-radius: 26px;
+    color: var(--cor-texto-claro);
+}
+
+.img_capa_imovel {
+    width: 100%;
+    border-top-left-radius: 26px;
+    border-top-right-radius: 26px;
+}
+
+.informacoes_imoveis {
+    padding: 20px;
+}
+
+.valor {
+    font-weight: bold;
+    border-bottom: 1px solid var(--cor-texto-claro);
+}
+
+
+/* =============================================
+   BOTÕES (Refatorado para evitar repetição)
+   ============================================= */
+
+/* Classe base para TODOS os botões */
+.btn_custom {
+    border: none;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Efeito suave na troca de cor */
+}
+
+/* Botão principal (verde com texto branco) */
+.btn_principal {
+    background-color: var(--cor-principal);
+    color: var(--cor-texto-claro);
+}
+
+.btn_principal:hover {
+    background-color: #29b38a; /* Um tom um pouco mais escuro para o hover */
+}
+
+/* Botão secundário (transparente com borda verde) */
+.btn_secundario {
+    background-color: transparent;
+    border: 2px solid var(--cor-principal);
+    color: var(--cor-principal);
+}
+
+.btn_secundario:hover {
+    background-color: var(--cor-principal);
+    color: var(--cor-texto-claro);
+}
+
+
+/* =============================================
+   TÍTULOS E TEXTOS
+   ============================================= */
+
+.titulo_filtrar {
+    color: var(--cor-principal);
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.titulo_especificacao {
+    color: var(--cor-principal);
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+.especificacao {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.especificacao_endereco {
+    font-size: 25px;
+}
+
+.div_possivel_interesse {
+    text-align: left;
+}
+
+
+/* =============================================
+   RESPONSIVIDADE (Para Celulares e Telas Pequenas)
+   ============================================= */
+
+@media (max-width: 768px) {
+    /* Ajusta o tamanho das fontes em telas menores */
+    .titulo_especificacao {
+        font-size: 28px;
+    }
+
+    .especificacao {
+        font-size: 22px;
+    }
+
+    .especificacao_endereco {
+        font-size: 18px;
+    }
+
+    .card_imovel {
+        width: 90%; /* Ocupa mais espaço da tela */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #carouselExampleIndicators {
+        /* Remove a largura máxima em telas pequenas para ocupar mais espaço */
+        max-width: 100%;
+        border-radius: 0; /* Bordas retas em telas pequenas */
+    }
+
+    .carousel-item img {
+        max-height: 300px; /* Altura menor para o carrossel em celulares */
+    }
+}
